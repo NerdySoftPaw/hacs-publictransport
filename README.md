@@ -4,12 +4,19 @@
 [![GitHub Activity][commits-shield]][commits]
 [![License][license-shield]](LICENSE)
 [![HACS][hacsbadge]][hacs]
+[![Documentation](https://img.shields.io/badge/docs-readthedocs-blue.svg?style=for-the-badge)](https://hacs-publictransport.readthedocs.io/)
 
 ![Project Maintenance][maintenance-shield]
 [![HACS Validation](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/hacs.yaml/badge.svg)](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/hacs.yaml)
 [![Code Quality](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/lint.yaml/badge.svg)](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/lint.yaml)
 [![Tests](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/tests.yaml/badge.svg)](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/tests.yaml)
 
+> **📢 This is the official active repository!**
+> 
+> This repository (`hacs-publictransport`) is the successor to `hacs-vrr` and is under active development.
+> For migration instructions, see [MIGRATION.md](MIGRATION.md).
+> 
+> 📖 **Full Documentation**: [hacs-publictransport.readthedocs.io](https://hacs-publictransport.readthedocs.io/)
 
 A Home Assistant integration for the public transport networks VRR (Verkehrsverbund Rhein-Ruhr), KVV (Karlsruher Verkehrsverbund), HVV (Hochbahn), Trafiklab (Sweden) and NTA (National Transport Authority, Ireland). This integration provides real-time departure information for public transport in NRW, Karlsruhe, Hamburg, Sweden and Ireland.
 
