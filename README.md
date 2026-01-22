@@ -6,9 +6,9 @@
 [![HACS][hacsbadge]][hacs]
 
 ![Project Maintenance][maintenance-shield]
-[![HACS Validation](https://github.com/NerdySoftPaw/VRRAPI-HACS/actions/workflows/hacs.yaml/badge.svg)](https://github.com/NerdySoftPaw/VRRAPI-HACS/actions/workflows/hacs.yaml)
-[![Code Quality](https://github.com/NerdySoftPaw/VRRAPI-HACS/actions/workflows/lint.yaml/badge.svg)](https://github.com/NerdySoftPaw/VRRAPI-HACS/actions/workflows/lint.yaml)
-[![Tests](https://github.com/NerdySoftPaw/VRRAPI-HACS/actions/workflows/tests.yaml/badge.svg)](https://github.com/NerdySoftPaw/VRRAPI-HACS/actions/workflows/tests.yaml)
+[![HACS Validation](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/hacs.yaml/badge.svg)](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/hacs.yaml)
+[![Code Quality](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/lint.yaml/badge.svg)](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/lint.yaml)
+[![Tests](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/tests.yaml/badge.svg)](https://github.com/NerdySoftPaw/hacs-publictransport/actions/workflows/tests.yaml)
 
 
 A Home Assistant integration for the public transport networks VRR (Verkehrsverbund Rhein-Ruhr), KVV (Karlsruher Verkehrsverbund), HVV (Hochbahn), Trafiklab (Sweden) and NTA (National Transport Authority, Ireland). This integration provides real-time departure information for public transport in NRW, Karlsruhe, Hamburg, Sweden and Ireland.
@@ -50,7 +50,7 @@ A Home Assistant integration for the public transport networks VRR (Verkehrsverb
 1. Open HACS in Home Assistant
 2. Go to "Integrations"
 3. Click the three dots in the top right and select "Custom repositories"
-4. Add this repository URL: `https://github.com/nerdysoftpaw/VRRAPI-HACS`
+4. Add this repository URL: `https://github.com/nerdysoftpaw/hacs-publictransport`
 5. Select "Integration" as category
 6. Click "Add"
 7. Search for "Public" and install the integration
@@ -750,11 +750,11 @@ for dep in departures:
 
 **Made with ❤️ for the Home Assistant community**
 <!-- Links -->
-[releases-shield]: https://img.shields.io/github/release/NerdySoftPaw/VRRAPI-HACS.svg?style=for-the-badge
-[releases]: https://github.com/NerdySoftPaw/VRRAPI-HACS/releases
-[commits-shield]: https://img.shields.io/github/commit-activity/y/NerdySoftPaw/VRRAPI-HACS.svg?style=for-the-badge
-[commits]: https://github.com/NerdySoftPaw/VRRAPI-HACS/commits/main
-[license-shield]: https://img.shields.io/github/license/NerdySoftPaw/VRRAPI-HACS.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/NerdySoftPaw/hacs-publictransport.svg?style=for-the-badge
+[releases]: https://github.com/NerdySoftPaw/hacs-publictransport/releases
+[commits-shield]: https://img.shields.io/github/commit-activity/y/NerdySoftPaw/hacs-publictransport.svg?style=for-the-badge
+[commits]: https://github.com/NerdySoftPaw/hacs-publictransport/commits/main
+[license-shield]: https://img.shields.io/github/license/NerdySoftPaw/hacs-publictransport.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-NerdySoftPaw-blue.svg?style=for-the-badge
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
 [hacs]: https://github.com/hacs/integration
