@@ -1,217 +1,84 @@
-# Migration Guide / Migrationsanleitung
+# Migration Guide
 
-## Deutsch
+> **Note:** This migration guide is only relevant when upgrading from version `2026.01.22` or earlier to version `2026.01.23`.
+> If you're installing fresh, you can skip this guide entirely.
 
-### Wichtige Ankündigung: Repository-Umzug
+## Repository Change
 
-Das VRR Public Transport Integration wurde in ein neues Repository verschoben:
+The integration has moved to a new repository:
 
-**Altes Repository:** `NerdySoftPaw/VRRAPI-HACS`
-**Neues Repository:** `NerdySoftPaw/hacs-publictransport`
-
-Das neue Repository unterstützt nun mehrere Provider (VRR, KVV, HVV, Trafiklab, NTA) und wird aktiv weiterentwickelt.
+| | Old | New |
+|--|-----|-----|
+| **Repository** | `NerdySoftPaw/VRRAPI-HACS` | `NerdySoftPaw/hacs-publictransport` |
+| **Providers** | VRR only | VRR, KVV, HVV, Trafiklab, NTA |
+| **Status** | ⚠️ Deprecated | ✅ Active Development |
 
 ---
 
-## Option 1: Schnelle Migration (Empfohlen)
+## Migration Steps
 
-Diese Methode behält deine bestehende Konfiguration und Sensoren bei.
+Your existing configuration will be **automatically migrated**. Just follow these simple steps:
 
-### Schritt 1: Repository in HACS wechseln
+### Step 1: Change Repository URL in HACS
 
-1. Öffne **HACS** in der Seitenleiste
-2. Gehe zu **Integrationen**
-3. Suche nach "VRR"
-4. Klicke auf die Integration
-5. Klicke auf die drei Punkte (⋮) oben rechts → **Entfernen**
-6. **WICHTIG:** Nur aus HACS entfernen, NICHT die Integration in Home Assistant löschen!
-
-### Schritt 2: Neues Repository hinzufügen
-
-1. Klicke in HACS auf die drei Punkte (⋮) oben rechts
-2. Wähle **Benutzerdefinierte Repositories**
-3. Füge hinzu:
+1. Open **HACS** → **Integrations**
+2. Find "VRR" or "Public Transport"
+3. Click the three dots (⋮) → **Redownload**
+4. In the repository field, change the URL to:
    ```
    https://github.com/NerdySoftPaw/hacs-publictransport
    ```
-4. Kategorie: **Integration**
-5. Klicke **Hinzufügen**
+5. Click **Download**
 
-### Schritt 3: Neue Version installieren
-
-1. Suche in HACS nach "Public Transport"
-2. Klicke auf **Public Transport Departures**
-3. Klicke **Herunterladen**
-4. Wähle die neueste Version
-
-### Schritt 4: Home Assistant neu starten
-
-1. Gehe zu **Einstellungen** → **System** → **Neu starten**
-2. Fertig! Deine Konfiguration sollte erhalten bleiben.
-
----
-
-## Option 2: Manuelle Migration (Für Experten)
-
-Falls HACS Probleme macht, kannst du die Dateien direkt ersetzen.
-
-### Schritt 1: Neue Dateien herunterladen
-
-```bash
-cd /config/custom_components/
-rm -rf vrr/
-wget https://github.com/NerdySoftPaw/hacs-publictransport/releases/latest/download/vrr.zip
-unzip vrr.zip
-rm vrr.zip
-```
-
-### Schritt 2: Home Assistant neu starten
-
-Deine bestehende Konfiguration bleibt erhalten.
-
----
-
-## Option 3: Saubere Neuinstallation
-
-Falls du Probleme hast oder einen Neuanfang möchtest.
-
-### Schritt 1: Alte Integration komplett entfernen
-
-1. **Einstellungen** → **Geräte & Dienste**
-2. Suche "VRR" → drei Punkte (⋮) → **Löschen**
-
-### Schritt 2: Aus HACS entfernen
-
-1. **HACS** → **Integrationen** → "VRR" → **Entfernen**
-
-### Schritt 3: Neu starten
-
-**Einstellungen** → **System** → **Neu starten**
-
-### Schritt 4: Neues Repository hinzufügen & installieren
-
-(Siehe Option 1, Schritte 2-4)
-
-### Schritt 5: Integration neu einrichten
-
-1. **Einstellungen** → **Geräte & Dienste** → **+ Integration hinzufügen**
-2. Suche "Public Transport"
-3. Folge dem Einrichtungsassistenten
-
----
-
-## Wichtige Hinweise
-
-| Methode | Konfiguration | Historische Daten | Entity-IDs |
-|---------|--------------|-------------------|------------|
-| Option 1 (Schnell) | ✅ Bleibt erhalten | ✅ Bleibt erhalten | ✅ Bleiben gleich |
-| Option 2 (Manuell) | ✅ Bleibt erhalten | ✅ Bleibt erhalten | ✅ Bleiben gleich |
-| Option 3 (Sauber) | ❌ Neu einrichten | ❌ Geht verloren | ❌ Können sich ändern |
-
----
-
-## Neue Features
-
-- Multi-Provider Support (VRR, KVV, HVV, Trafiklab, NTA)
-- Verbesserte Haltestellensuche mit Fuzzy-Matching
-- Binary Sensor für Verspätungen
-- Caching für schnellere Antworten
-- Bessere Fehlerbehandlung
-
----
-
-## Hilfe
-
-Bei Problemen: https://github.com/NerdySoftPaw/hacs-publictransport/issues
-
----
----
-
-## English
-
-### Important: Repository Move
-
-**Old Repository:** `NerdySoftPaw/VRRAPI-HACS`
-**New Repository:** `NerdySoftPaw/hacs-publictransport`
-
----
-
-## Option 1: Quick Migration (Recommended)
-
-This method keeps your existing configuration and sensors.
-
-### Step 1: Switch Repository in HACS
-
-1. Open **HACS** in the sidebar
-2. Go to **Integrations**
-3. Search for "VRR"
-4. Click on the integration
-5. Click three dots (⋮) → **Remove**
-6. **IMPORTANT:** Only remove from HACS, do NOT delete the integration in Home Assistant!
-
-### Step 2: Add New Repository
-
-1. In HACS, click three dots (⋮) top right
-2. Select **Custom repositories**
-3. Add:
-   ```
-   https://github.com/NerdySoftPaw/hacs-publictransport
-   ```
-4. Category: **Integration**
-5. Click **Add**
-
-### Step 3: Install New Version
-
-1. Search in HACS for "Public Transport"
-2. Click **Public Transport Departures**
-3. Click **Download**
-4. Select latest version
-
-### Step 4: Restart Home Assistant
+### Step 2: Restart Home Assistant
 
 1. Go to **Settings** → **System** → **Restart**
-2. Done! Your configuration should be preserved.
+2. Wait for Home Assistant to restart
+
+### Step 3: Done! ✅
+
+Your existing sensors, configuration, and historical data are automatically preserved.
 
 ---
 
-## Option 2: Manual Migration (For Experts)
+## What Gets Migrated
 
-If HACS has issues, you can replace files directly.
-
-```bash
-cd /config/custom_components/
-rm -rf vrr/
-wget https://github.com/NerdySoftPaw/hacs-publictransport/releases/latest/download/vrr.zip
-unzip vrr.zip
-rm vrr.zip
-```
-
-Then restart Home Assistant.
+| Item | Status |
+|------|--------|
+| Sensor configuration | ✅ Preserved |
+| Entity IDs | ✅ Unchanged |
+| Historical data | ✅ Preserved |
+| Automations using VRR entities | ✅ Continue working |
+| Dashboard cards | ✅ Continue working |
 
 ---
 
-## Option 3: Clean Reinstall
+## New Features After Migration
 
-If you have issues or want a fresh start.
+After migrating to version `2026.01.23`, you'll have access to:
 
-1. Remove integration: **Settings** → **Devices & Services** → "VRR" → **Delete**
-2. Remove from HACS: **HACS** → **Integrations** → "VRR" → **Remove**
-3. Restart Home Assistant
-4. Add new repository (see Option 1, Steps 2-4)
-5. Set up integration again
-
----
-
-## Summary
-
-| Method | Configuration | History | Entity IDs |
-|--------|--------------|---------|------------|
-| Option 1 (Quick) | ✅ Preserved | ✅ Preserved | ✅ Same |
-| Option 2 (Manual) | ✅ Preserved | ✅ Preserved | ✅ Same |
-| Option 3 (Clean) | ❌ Re-setup | ❌ Lost | ❌ May change |
+- 🇮🇪 **NTA Ireland** - New provider for Irish public transport
+- 🧠 **Fuzzy Search** - Find stops even with typos
+- ⚡ **Better Performance** - 20-30% faster updates
+- 📦 **API Caching** - Reduced API calls
 
 ---
 
-## Help
+## Troubleshooting
 
-Issues: https://github.com/NerdySoftPaw/hacs-publictransport/issues
+### Integration not showing after restart?
+
+1. Check if the custom component folder exists: `/config/custom_components/vrr/`
+2. Check Home Assistant logs for errors
+3. Try clearing browser cache and refreshing
+
+### HACS shows old version?
+
+1. In HACS, click on the integration
+2. Click three dots (⋮) → **Redownload**
+3. Make sure the repository URL is correct
+
+### Need Help?
+
+- 📖 [Documentation](https://hacs-publictransport.readthedocs.io/)
+- 🐛 [Report an Issue](https://github.com/NerdySoftPaw/hacs-publictransport/issues)

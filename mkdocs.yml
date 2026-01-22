@@ -50,6 +50,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Installation: installation.md
+  - Migration Guide: migration.md
   - Configuration: configuration.md
   - Providers:
       - Overview: providers/index.md
