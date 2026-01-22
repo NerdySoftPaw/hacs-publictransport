@@ -13,7 +13,7 @@
 
 > **📢 This is the official active repository!**
 > 
-> This repository (`hacs-publictransport`) is the successor to `hacs-vrr` and is under active development.
+> This repository (`hacs-publictransport`) is the successor to `VRRAPI-HACS` and is under active development.
 > For migration instructions, see [MIGRATION.md](MIGRATION.md).
 > 
 > 📖 **Full Documentation**: [hacs-publictransport.readthedocs.io](https://hacs-publictransport.readthedocs.io/)

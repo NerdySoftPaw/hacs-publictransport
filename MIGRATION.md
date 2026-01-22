@@ -6,7 +6,7 @@
 
 Das VRR Public Transport Integration wurde in ein neues Repository verschoben:
 
-**Altes Repository:** `NerdySoftPaw/hacs-vrr`
+**Altes Repository:** `NerdySoftPaw/VRRAPI-HACS`
 **Neues Repository:** `NerdySoftPaw/hacs-publictransport`
 
 Das neue Repository unterstützt nun mehrere Provider (VRR, KVV, HVV, Trafiklab, NTA) und wird aktiv weiterentwickelt.
@@ -131,7 +131,7 @@ Bei Problemen: https://github.com/NerdySoftPaw/hacs-publictransport/issues
 
 ### Important: Repository Move
 
-**Old Repository:** `NerdySoftPaw/hacs-vrr`
+**Old Repository:** `NerdySoftPaw/VRRAPI-HACS`
 **New Repository:** `NerdySoftPaw/hacs-publictransport`
 
 ---
