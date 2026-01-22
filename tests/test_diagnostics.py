@@ -1,4 +1,5 @@
 """Tests for VRR diagnostics."""
+
 from homeassistant.core import HomeAssistant
 
 from custom_components.vrr.const import DOMAIN

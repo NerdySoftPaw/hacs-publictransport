@@ -7,16 +7,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from homeassistant.util import dt as dt_util
 
-from custom_components.vrr.const import (
-    API_RATE_LIMIT_PER_DAY,
-    DOMAIN,
-    PROVIDER_VRR,
-)
-from custom_components.vrr.sensor import (
-    MultiProviderSensor,
-    VRRDataUpdateCoordinator,
-    async_setup_entry,
-)
+from custom_components.vrr.const import API_RATE_LIMIT_PER_DAY, DOMAIN, PROVIDER_VRR
+from custom_components.vrr.sensor import MultiProviderSensor, VRRDataUpdateCoordinator, async_setup_entry
 
 
 async def test_coordinator_update(hass: HomeAssistant, mock_api_response):
@@ -171,9 +163,14 @@ async def test_async_setup_entry(hass: HomeAssistant, mock_config_entry, mock_ap
     # Initialize hass.data[DOMAIN] as __init__.py would do
     hass.data.setdefault(DOMAIN, {})
 
-    with patch(
-        "custom_components.vrr.sensor.VRRDataUpdateCoordinator._fetch_departures",
-        return_value=mock_api_response,
+    with (
+        patch(
+            "custom_components.vrr.sensor.VRRDataUpdateCoordinator._fetch_departures",
+            return_value=mock_api_response,
+        ),
+        patch(
+            "custom_components.vrr.sensor.VRRDataUpdateCoordinator.async_config_entry_first_refresh",
+        ),
     ):
         entities = []
 

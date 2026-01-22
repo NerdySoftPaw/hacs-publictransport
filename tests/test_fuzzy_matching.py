@@ -1,4 +1,5 @@
 """Tests for fuzzy matching functionality in config flow."""
+
 import pytest
 
 from custom_components.vrr.config_flow import VRRConfigFlow
@@ -106,11 +107,7 @@ def test_calculate_relevance_umlaut_tolerance(config_flow):
 def test_calculate_relevance_place_bonus(config_flow):
     """Test relevance scoring with place name matching."""
     # When place is mentioned in search, it should get place bonus
-    score = config_flow._calculate_relevance(
-        "Düsseldorf Hauptbahnhof",
-        "Hauptbahnhof",
-        "Düsseldorf"
-    )
+    score = config_flow._calculate_relevance("Düsseldorf Hauptbahnhof", "Hauptbahnhof", "Düsseldorf")
 
     # Should get place matching bonus (200 points)
     assert score >= 200  # Place match gives +200
@@ -126,11 +123,7 @@ def test_calculate_relevance_starts_with(config_flow):
 def test_calculate_relevance_word_matching(config_flow):
     """Test relevance scoring with individual word fuzzy matching."""
     # "Hauptbanhof" is close to "Hauptbahnhof"
-    score = config_flow._calculate_relevance(
-        "Hauptbanhof Dusseldorf",
-        "Hauptbahnhof",
-        "Düsseldorf"
-    )
+    score = config_flow._calculate_relevance("Hauptbanhof Dusseldorf", "Hauptbahnhof", "Düsseldorf")
 
     # Should get points for fuzzy word matching
     assert score > 100

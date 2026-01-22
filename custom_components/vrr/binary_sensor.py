@@ -2,12 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Any
+from datetime import datetime
+from typing import Any, Callable
 
-from homeassistant.components.binary_sensor import (
-    BinarySensorDeviceClass,
-    BinarySensorEntity,
-)
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass, BinarySensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import DeviceInfo
@@ -24,6 +22,7 @@ from .const import (
     PROVIDER_VRR,
     TRANSPORTATION_TYPES,
 )
+from .data_models import UnifiedDeparture
 from .sensor import VRRDataUpdateCoordinator
 
 
@@ -64,7 +63,7 @@ class VRRDelayBinarySensor(CoordinatorEntity, BinarySensorEntity):
         self._config_entry = config_entry
         self.transportation_types = transportation_types
         self._attr_is_on = False
-        self._attributes = {}
+        self._attributes: dict[str, Any] = {}
 
         # Setup entity
         provider = coordinator.provider
@@ -175,14 +174,20 @@ class VRRDelayBinarySensor(CoordinatorEntity, BinarySensorEntity):
                 self.transportation_types,
             )
 
+            # Initialize parse_fn with proper type
+            parse_fn: Callable[[dict[str, Any], Any, datetime], UnifiedDeparture | None] | None = None
+
             # Use provider instance for parsing if available
             if self.coordinator.provider_instance:
                 provider_instance = self.coordinator.provider_instance
                 tz_provider = dt_util.get_time_zone(provider_instance.get_timezone())
 
-                def parse_fn(stop, tz_param, now_param):
+                def _parse_with_provider(
+                    stop: dict[str, Any], tz_param: Any, now_param: datetime
+                ) -> UnifiedDeparture | None:
                     return provider_instance.parse_departure(stop, tz_provider, now_param)
 
+                parse_fn = _parse_with_provider
             # Fallback to old implementation
             elif provider == PROVIDER_VRR:
                 parse_fn = temp_sensor._parse_departure_vrr
@@ -192,8 +197,6 @@ class VRRDelayBinarySensor(CoordinatorEntity, BinarySensorEntity):
                 parse_fn = temp_sensor._parse_departure_hvv
             elif provider == PROVIDER_TRAFIKLAB_SE:
                 parse_fn = temp_sensor._parse_departure_trafiklab
-            else:
-                parse_fn = None
 
             delayed_count = 0
             on_time_count = 0
@@ -201,7 +204,7 @@ class VRRDelayBinarySensor(CoordinatorEntity, BinarySensorEntity):
             max_delay = 0
             delays = []
 
-            if parse_fn:
+            if parse_fn is not None:
                 transport_types_set = set(self.transportation_types)
                 for stop in stop_events:
                     dep = parse_fn(stop, tz, now)

@@ -42,7 +42,7 @@ from .providers import get_provider
 _LOGGER = logging.getLogger(__name__)
 
 
-class VRRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class VRRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
     """Handle a config flow for VRR integration with autocomplete."""
 
     VERSION = 1
@@ -194,7 +194,7 @@ class VRRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=schema,
             errors=errors,
             description_placeholders={
-                "provider": self._provider.upper(),
+                "provider": self._provider.upper() if self._provider else "",
             },
         )
 
@@ -263,6 +263,10 @@ class VRRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         )
 
         if user_input is not None:
+            # Validate that we have a selected stop
+            if self._selected_stop is None:
+                return self.async_abort(reason="no_stop_selected")
+
             # Combine all collected data
             data = {
                 CONF_PROVIDER: self._provider,
@@ -296,15 +300,15 @@ class VRRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 if self._api_key_secondary:
                     data[CONF_NTA_API_KEY_SECONDARY] = self._api_key_secondary
 
-            # Create unique ID
+            # Create unique ID (self._selected_stop validated above)
             unique_id = f"{self._provider}_{self._selected_stop['id']}"
             await self.async_set_unique_id(unique_id)
             self._abort_if_unique_id_configured()
 
-            # Create title
+            # Create title (self._selected_stop validated above)
             place = self._selected_stop.get("place", "")
             name = self._selected_stop.get("name", "")
-            title = f"{self._provider.upper()} {place} - {name}".strip()
+            title = f"{(self._provider or '').upper()} {place} - {name}".strip()
 
             # Cleanup temp data
             self.hass.data.pop(f"{DOMAIN}_temp_locations", None)
@@ -718,7 +722,7 @@ class VRRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return results
 
-    def _get_cache_key(self, provider: str, search_term: str, search_type: str = "stop") -> str:
+    def _get_cache_key(self, provider: Optional[str], search_term: str, search_type: str = "stop") -> str:
         """Generate cache key for search request.
 
         Args:
@@ -731,7 +735,7 @@ class VRRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """
         # Normalize search term for consistent caching
         normalized_term = self._normalize_umlauts(search_term.lower().strip())
-        return f"{provider}:{search_type}:{normalized_term}"
+        return f"{provider or ''}:{search_type}:{normalized_term}"
 
     def _get_from_cache(self, cache_key: str) -> Optional[List[Dict[str, Any]]]:
         """Get cached search results if still valid.
@@ -849,7 +853,7 @@ class VRRConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return len(str1)
 
         # Create array with distances
-        previous_row = range(len(str2) + 1)
+        previous_row: list[int] = list(range(len(str2) + 1))
         for i, c1 in enumerate(str1):
             current_row = [i + 1]
             for j, c2 in enumerate(str2):

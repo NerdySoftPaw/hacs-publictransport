@@ -7,7 +7,7 @@ This module defines standardized data structures that all providers
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Any, Optional
 
 
 class UnifiedTransportType(str, Enum):
@@ -77,9 +77,9 @@ class UnifiedStop:
     area_type: Optional[str] = None  # e.g., "META_STOP", "stop", "station"
     transport_modes: Optional[list[str]] = None  # Available transport modes
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for config flow."""
-        result = {
+        result: dict[str, Any] = {
             "id": self.id,
             "name": self.name,
         }
@@ -87,6 +87,6 @@ class UnifiedStop:
             result["place"] = self.place
         if self.area_type:
             result["area_type"] = self.area_type
-        if self.transport_modes:
+        if self.transport_modes is not None:
             result["transport_modes"] = self.transport_modes
         return result

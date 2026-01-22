@@ -198,7 +198,9 @@ class NTAProvider(BaseProvider):
                                 estimated_time_str = estimated_time.strftime("%Y-%m-%dT%H:%M:%S%z")
 
                                 # Get platform
-                                platform = stop_time_update.get("platform_code") or stop_time_update.get("platform") or ""
+                                platform = (
+                                    stop_time_update.get("platform_code") or stop_time_update.get("platform") or ""
+                                )
 
                                 stop_event = {
                                     "departureTimePlanned": planned_time_str,

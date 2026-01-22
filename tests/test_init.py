@@ -1,4 +1,5 @@
 """Tests for VRR integration initialization."""
+
 from unittest.mock import AsyncMock, MagicMock, patch
 
 from homeassistant.config_entries import ConfigEntry

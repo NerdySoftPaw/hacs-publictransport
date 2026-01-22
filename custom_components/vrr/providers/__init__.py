@@ -4,13 +4,7 @@ from typing import Dict, Optional, Type
 
 from homeassistant.core import HomeAssistant
 
-from ..const import (
-    PROVIDER_HVV,
-    PROVIDER_KVV,
-    PROVIDER_NTA_IE,
-    PROVIDER_TRAFIKLAB_SE,
-    PROVIDER_VRR,
-)
+from ..const import PROVIDER_HVV, PROVIDER_KVV, PROVIDER_NTA_IE, PROVIDER_TRAFIKLAB_SE, PROVIDER_VRR
 from .base import BaseProvider
 from .hvv import HVVProvider
 from .kvv import KVVProvider
@@ -27,12 +21,14 @@ def register_provider(provider_id: str, provider_class: Type[BaseProvider]) -> N
 
 
 def get_provider(
-    provider_id: str,
+    provider_id: Optional[str],
     hass: HomeAssistant,
     api_key: Optional[str] = None,
     api_key_secondary: Optional[str] = None,
 ) -> Optional[BaseProvider]:
     """Get a provider instance by ID."""
+    if provider_id is None:
+        return None
     provider_class = _PROVIDER_REGISTRY.get(provider_id)
     if provider_class:
         return provider_class(hass, api_key=api_key, api_key_secondary=api_key_secondary)

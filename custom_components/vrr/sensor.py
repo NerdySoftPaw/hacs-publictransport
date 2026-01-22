@@ -13,11 +13,7 @@ from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import (
-    CoordinatorEntity,
-    DataUpdateCoordinator,
-    UpdateFailed,
-)
+from homeassistant.helpers.update_coordinator import CoordinatorEntity, DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
 
 from .const import (
@@ -623,20 +619,17 @@ class VRRDataUpdateCoordinator(DataUpdateCoordinator):
                                     transport_type_mapped,
                                 )
 
-                                # Try to get platform from stop_time_update first (GTFS-RT extension)
-                                # Some GTFS-RT feeds include platform_code in stop_time_update
-                                platform_from_rt = stop_time_update.get("platform_code") or stop_time_update.get(
-                                    "platform"
+                                # Try to get platform from stop_time_update (GTFS-RT extension)
+                                platform = (
+                                    stop_time_update.get("platform_code") or stop_time_update.get("platform") or ""
                                 )
-                                # Fallback to GTFS Static platform_code if not in RT data
-                                platform = platform_from_rt or platform_code or ""
 
                                 stop_event = {
                                     "departureTimePlanned": planned_time_str,
                                     "departureTimeEstimated": estimated_time_str,
                                     "transportation": {
                                         "number": route_short_name,
-                                        "description": agency_name or "",
+                                        "description": "",
                                         "destination": {"name": destination},
                                         "product": {"class": route_type},
                                     },
@@ -646,7 +639,6 @@ class VRRDataUpdateCoordinator(DataUpdateCoordinator):
                                     "trip_id": trip_id,
                                     "stop_id": stop_id,
                                     "delay_seconds": delay_seconds,
-                                    "agency": agency_name,  # Add agency as separate field
                                 }
                                 stop_events.append(stop_event)
                                 processed_entities += 1
@@ -813,8 +805,8 @@ class MultiProviderSensor(CoordinatorEntity, SensorEntity):
         super().__init__(coordinator)
         self._config_entry = config_entry
         self.transportation_types = transportation_types or list(TRANSPORTATION_TYPES.keys())
-        self._state = None
-        self._attributes = {}
+        self._state: str | None = None
+        self._attributes: dict[str, Any] = {}
 
         # Get option for provider logo display
         self._use_provider_logo = config_entry.options.get(
@@ -838,7 +830,7 @@ class MultiProviderSensor(CoordinatorEntity, SensorEntity):
             name=f"{place_dm} - {name_dm}",
             manufacturer=f"{provider.upper()} Public Transport",
             model="Departure Monitor",
-            sw_version="2026.01.22",
+            sw_version="2026.01.23",
             configuration_url="https://github.com/NerdySoftPaw/hacs-publictransport",
             suggested_area=place_dm,
         )
@@ -993,14 +985,20 @@ class MultiProviderSensor(CoordinatorEntity, SensorEntity):
         # Cache transportation_types to avoid repeated lookups
         transport_types_set = set(self.transportation_types)  # Set lookup is O(1) vs list O(n)
 
+        # Initialize parse_fn with proper type
+        parse_fn: Callable[[dict[str, Any], Any, datetime], UnifiedDeparture | None] | None = None
+
         # Use provider instance for parsing if available
         if self.coordinator.provider_instance:
             provider_instance = self.coordinator.provider_instance
             tz_provider = dt_util.get_time_zone(provider_instance.get_timezone())
 
-            def parse_fn(stop, tz_param, now_param):
+            def _parse_with_provider(
+                stop: dict[str, Any], tz_param: Any, now_param: datetime
+            ) -> UnifiedDeparture | None:
                 return provider_instance.parse_departure(stop, tz_provider, now_param)
 
+            parse_fn = _parse_with_provider
         else:
             # Fallback to old implementation
             if provider == PROVIDER_VRR:
@@ -1013,10 +1011,8 @@ class MultiProviderSensor(CoordinatorEntity, SensorEntity):
                 parse_fn = self._parse_departure_trafiklab
             elif provider == PROVIDER_NTA_IE:
                 parse_fn = self._parse_departure_nta
-            else:
-                parse_fn = None
 
-        if parse_fn:
+        if parse_fn is not None:
             for stop in stop_events:
                 dep = parse_fn(stop, tz, now)
                 # Filter by configured transportation types (set lookup is faster)

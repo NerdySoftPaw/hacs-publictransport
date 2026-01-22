@@ -4,10 +4,7 @@ from unittest.mock import MagicMock
 
 from homeassistant.core import HomeAssistant
 
-from custom_components.vrr.binary_sensor import (
-    VRRDelayBinarySensor,
-    async_setup_entry,
-)
+from custom_components.vrr.binary_sensor import VRRDelayBinarySensor, async_setup_entry
 from custom_components.vrr.const import DOMAIN, PROVIDER_VRR
 
 

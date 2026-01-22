@@ -7,6 +7,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.setup import async_setup_component
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
+# Import config_flow to ensure handlers are registered
+import custom_components.vrr.config_flow  # noqa: F401
 from custom_components.vrr.const import (
     CONF_DEPARTURES,
     CONF_PROVIDER,
