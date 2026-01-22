@@ -7,7 +7,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.util import dt as dt_util
 
 from custom_components.vrr.const import (
-    PROVIDER_GTFS_DE,
     PROVIDER_HVV,
     PROVIDER_KVV,
     PROVIDER_NTA_IE,
@@ -15,7 +14,6 @@ from custom_components.vrr.const import (
     PROVIDER_VRR,
 )
 from custom_components.vrr.providers import get_provider
-from custom_components.vrr.providers.gtfs_de import GTFSDEProvider
 from custom_components.vrr.providers.hvv import HVVProvider
 from custom_components.vrr.providers.kvv import KVVProvider
 from custom_components.vrr.providers.nta import NTAProvider
@@ -27,7 +25,6 @@ from custom_components.vrr.providers.vrr import VRRProvider
 def mock_hass():
     """Return a mock Home Assistant instance."""
     hass = MagicMock(spec=HomeAssistant)
-    # Add config attribute for GTFS providers
     hass.config = MagicMock()
     hass.config.config_dir = "/tmp/test_config"
     return hass
@@ -72,14 +69,6 @@ class TestProviderRegistry:
         assert isinstance(provider, NTAProvider)
         assert provider.provider_id == PROVIDER_NTA_IE
         assert provider.requires_api_key is True
-
-    def test_get_provider_gtfs_de(self, mock_hass):
-        """Test getting GTFS-DE provider."""
-        provider = get_provider(PROVIDER_GTFS_DE, mock_hass)
-        assert provider is not None
-        assert isinstance(provider, GTFSDEProvider)
-        assert provider.provider_id == PROVIDER_GTFS_DE
-        assert provider.requires_api_key is False
 
     def test_get_provider_invalid(self, mock_hass):
         """Test getting invalid provider."""
