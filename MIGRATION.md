@@ -1,6 +1,6 @@
 # Migration Guide
 
-> **Note:** This migration guide is only relevant when upgrading from version `2026.01.22` or earlier to version `2026.01.23`.
+> **Note:** This migration guide is only relevant when upgrading from version `2026.01.22` or earlier to version `2026.01.23` and higher.
 > If you're installing fresh, you can skip this guide entirely.
 
 ## Repository Change
@@ -67,7 +67,7 @@ Your existing sensors, configuration, and historical data are automatically pres
 
 ## New Features After Migration
 
-After migrating to version `2026.01.23`, you'll have access to:
+After migrating to version `2026.01.23` or higher, you'll have access to:
 
 - 🇮🇪 **NTA Ireland** - New provider for Irish public transport
 - 🧠 **Fuzzy Search** - Find stops even with typos

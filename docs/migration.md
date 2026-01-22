@@ -1,7 +1,7 @@
 # Migration Guide
 
 !!! warning "Version Note"
-    This migration guide is **only relevant** when upgrading from version `2026.01.22` or earlier to version `2026.01.23`.
+    This migration guide is **only relevant** when upgrading from version `2026.01.22` or earlier to version `2026.01.23` and higher.
     
     If you're installing fresh, you can skip this guide entirely and go to [Installation](installation.md).
 
@@ -69,7 +69,7 @@ Your existing sensors, configuration, and historical data are automatically pres
 
 ## New Features After Migration
 
-After migrating to version `2026.01.23`, you'll have access to:
+After migrating to version `2026.01.23` or higher, you'll have access to:
 
 - :flag_ie: **NTA Ireland** - New provider for Irish public transport
 - :brain: **Fuzzy Search** - Find stops even with typos

@@ -2,6 +2,11 @@
 
 A Home Assistant integration for real-time public transport departure information across multiple European transit networks.
 
+!!! tip "Coming from VRRAPI-HACS?"
+    This is the new official repository! Your existing configuration will be automatically preserved.
+    
+    **[→ Migration Guide](migration.md)** - Quick 5-minute migration from the old repository.
+
 ## Supported Providers
 
 | Provider | Region | API Key Required |
