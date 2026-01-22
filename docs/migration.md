@@ -21,23 +21,35 @@ The integration has moved to a new repository with expanded multi-provider suppo
 
 Your existing configuration will be **automatically migrated**. Just follow these simple steps:
 
-### Step 1: Change Repository URL in HACS
+### Step 1: Add the New Repository
 
 1. Open **HACS** → **Integrations**
-2. Find "VRR" or "Public Transport"
-3. Click the three dots (:material-dots-vertical:) → **Redownload**
-4. In the repository field, change the URL to:
+2. Click the three dots (:material-dots-vertical:) in the top right corner
+3. Select **Custom repositories**
+4. Add the URL:
    ```
    https://github.com/NerdySoftPaw/hacs-publictransport
    ```
-5. Click **Download**
+5. Select type: **Integration**
+6. Click **ADD**
 
-### Step 2: Restart Home Assistant
+### Step 2: Download the New Version
+
+1. Search for "Public Transport" in HACS
+2. Click on **Public Transport Departures**
+3. Click **Download**
+
+### Step 3: Remove the Old Repository (Optional)
+
+1. In HACS, find the old "VRR" entry from VRRAPI-HACS
+2. Click the three dots (:material-dots-vertical:) → **Remove**
+
+### Step 4: Restart Home Assistant
 
 1. Go to **Settings** → **System** → **Restart**
 2. Wait for Home Assistant to restart
 
-### Step 3: Done! :material-check:
+### Step 5: Done! :material-check:
 
 Your existing sensors, configuration, and historical data are automatically preserved.
 
@@ -78,9 +90,9 @@ See the full [Release Notes](https://github.com/NerdySoftPaw/hacs-publictranspor
 
 ### HACS shows old version?
 
-1. In HACS, click on the integration
-2. Click three dots (:material-dots-vertical:) → **Redownload**
-3. Make sure the repository URL is correct
+1. Make sure you added the new repository URL
+2. Remove the old VRRAPI-HACS entry from HACS
+3. Download from the new hacs-publictransport repository
 
 ### Need Help?
 
