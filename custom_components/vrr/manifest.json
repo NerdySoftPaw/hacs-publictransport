@@ -4,7 +4,7 @@
     "codeowners": ["@NerdySoftPaw"],
     "config_flow": true,
     "dependencies": [],
-    "documentation": "https://github.com/NerdySoftPaw/hacs-publictransport/blob/main/README.md",
+    "documentation": "https://hacs-publictransport.readthedocs.io/",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/NerdySoftPaw/hacs-publictransport/issues",
     "requirements": ["pytz", "aiofiles", "gtfs-realtime-bindings>=1.0.0"],
